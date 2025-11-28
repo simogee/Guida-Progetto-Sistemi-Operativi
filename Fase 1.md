@@ -30,7 +30,7 @@
 			--------	
 		      |                                                    to sentinel
 		      | s_link                                      ...  <------------
-		      v                                  pcb_t A                     |
+		      v                                  pcb_t A                         |
 		  --------  s_procq  ----------      --------------       ------------   |
 		  -semd_t- --------> -sentinel- ---->- p_list     - ----->- p_list   -  -|
 		  -s_key -           -s_procq -      - p_semAdd   -       - p_semAdd -   
@@ -49,7 +49,7 @@
 					- pcb * p_parent → puntatore al pcb del padre 
 					- list_head p_child → lista che inizia da valore sentinella e da inizio alla lista dei processi figli. Il valore sentinella è  il campo p_child dentro il pcb del padre.
 					- list_head p_sib → lista dei processi fratelli.
-				ASCII ART SCRAUSA rappresentativa della relazione child e sib.:				```
+				ASCII ART SCRAUSA rappresentativa della relazione child e sib.:		```
 					-----PCB Genitore----- (sentinella)
 					-   -p_child-        -               (l'ultimo p_sib)
 					-   - next  -        -  <---------------------------------
