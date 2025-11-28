@@ -23,6 +23,7 @@
 				- semd_h → lista dei semafori attivi.
 			- InitASL → le slide dicono di inizializzare solo semdFree. In realtà va inizializzata anche la lista semd_h.
 			- Quando gestiamo i semafori dobbiamo pensare che avremo un solo semd_t per ogni coda di processi. in questo semd_t abbiamo la chiave associata al semaforo, un list_head associato ai semafori vicini e un list_head per la coda di processi bloccati in quel semaforo.
+			- Momento ASCII art:
 			```
 			--------
 			-semd_t-
@@ -49,7 +50,7 @@
 					- pcb * p_parent → puntatore al pcb del padre 
 					- list_head p_child → lista che inizia da valore sentinella e da inizio alla lista dei processi figli. Il valore sentinella è  il campo p_child dentro il pcb del padre.
 					- list_head p_sib → lista dei processi fratelli.
-				ASCII ART SCRAUSA rappresentativa della relazione child e sib.:
+				- ASCII ART scarsa rappresentativa della relazione child e sib.:
 			- ```
 					-----PCB Genitore----- (sentinella)
 					-   -p_child-        -               (l'ultimo p_sib)
