@@ -29,8 +29,8 @@
 			-header-
 			--------	
 		      |                                                    to sentinel
-		      | s_link                                      ...  <----------------|
-		      v                                  pcb_t A                          |
+		      | s_link            |                         ...  <----------------|
+		      v                   v              pcb_t A                          |
 		  --------  s_procq  ----------      --------------       ------------   |
 		  -semd_t- --------> -sentinel- ---->- p_list     - ----->- p_list   -  -|
 		  -s_key -           -s_procq -      - p_semAdd   -       - p_semAdd -   
