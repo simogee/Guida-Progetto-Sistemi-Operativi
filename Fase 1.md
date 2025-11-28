@@ -30,7 +30,7 @@
 			--------	
 		      |                                                    to sentinel
 		      | s_link                                      ...  <------------
-		      v                                  pcb_t A                         |
+		      v                                  pcb_t A                          |
 		  --------  s_procq  ----------      --------------       ------------   |
 		  -semd_t- --------> -sentinel- ---->- p_list     - ----->- p_list   -  -|
 		  -s_key -           -s_procq -      - p_semAdd   -       - p_semAdd -   
@@ -56,9 +56,9 @@
 					-   - next  -        -  <---------------------------------
 					-	- prev  -        -          (e' collegato a next)     | 
 				   ---------| -------------          (di p_child del genitore)|
-							|                                                |
-							| next al p_sib                                  |
-							v                                                |
+							|                                                  |
+							| next al p_sib                                    |
+							v                                                  |
 					-----PCB A-------                 -----PCB_N------        |
 					-   --p_sib--   -   next a sib    -   --p_sib--  -        |
 					- 	--next--    - ---->     ... -   -- next -- -  -------
