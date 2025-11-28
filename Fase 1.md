@@ -54,7 +54,7 @@
 					-----PCB Genitore----- (sentinella)
 					-   -p_child-        -               (l'ultimo p_sib)
 					-   - next  -        -  <---------------------------------
-					-	- prev  -        -          (e' collegato a next)     | 
+					-	- prev  -        -          (e' collegato a next)      | 
 				   ---------| -------------          (di p_child del genitore)
 							|                                                  |
 							| next al p_sib                                    |
