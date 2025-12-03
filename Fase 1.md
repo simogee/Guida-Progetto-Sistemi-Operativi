@@ -1,6 +1,6 @@
 
 - ## Introduzione
-	In questa fase c'è poco codice da scrivere. E' molto importante capire le strutture dati presenti in types.h e le funzioni delle liste contenute in listx.h poichè le funzioni in quest'ultimo header saranno utilizzate quasi in tutte le funzioni da implementare
+	In questa fase c'è poco codice da scrivere. E' molto importante capire le strutture dati presenti in types.h e le funzioni delle liste contenute in listx.h poichè le funzioni in quest'ultimo header saranno utilizzate quasi in tutte le funzioni da implementare.
 - ## Strutture dati:
 	- types.h
 		- Pcb_t → struttura del pcb che contiene numerosi campi. Quelli usati in questa fase sono:
@@ -55,7 +55,7 @@
 					-----PCB Genitore----- (sentinella)
 					-   -p_child-        -               (l'ultimo p_sib)
 					-   - next  -        -  <---------------------------------
-					-	- prev  -        -          (e' collegato a next)      | 
+					-	- prev  -        -          (e' collegato a prev)      | 
 				   ---------|------------          (di p_child del genitore)
 							|                                                  |
 							| next al p_sib                                    |
@@ -66,4 +66,17 @@
 					-	--prev---   - <----     ...   -   -- prev -- - 
 					-----------------                 ----------------
 				```
-		
+- ## Funzioni/macro Listx.h
+	- cointainer_of(ptr, type, member) ⇒ ptr: è un puntatore list_head che punta ad un campo del nostro target.
+	  //todo esempio
+	- offsetof(TYPE, MEMBER) ((size_tt)(&((TYPE *)0)->MEMBER))
+	- struct list_head{ struct list_head \*next, \*prev;}
+	- static inline void INIT_LIST_HEAD(struct list_head \*list)
+	- static inline void \_\_list_add(struct list_head \*new, struct list_head \*prev, struct list_head \*next)
+		- static inline void list_add(struct list_head \*new, struct list_head \*head)
+		- static inline void list_add_tail(struct list_head \*new, struct list_head \*head)
+	- static inline void \_\_list_del(struct list_head \*prev, struct list_head \*next)
+		- static inline void list_del(struct list_head \*entry)
+	- static inline int list_is_last(const struct list_head \*list, const struct list_head \*head)
+	- static inline int list_empty(const struct list_head \*head)
+	- list_for_each(pos, head) for (pos = (head)->next; pos != (head); pos = pos->next)
