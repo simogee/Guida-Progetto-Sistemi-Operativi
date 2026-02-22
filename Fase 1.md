@@ -5,8 +5,8 @@
 	- types.h
 		- Pcb_t → struttura del pcb che contiene numerosi campi. Quelli usati in questa fase sono:
 			- p_list → gancio per aggiungere il pcb alle queue.
-			- p_child → lista dei figli del processo pcb in cui ci troviamo
-			- p_sib → lista di altri processi alla stessa profondità del pcb in cui ci troviamo.
+			- p_child → lista dei figli del processo pcb in cui ci troviamo: in questo caso è un list_head(nodo) che è un valore sentinella(head)
+			- p_sib → lista di altri processi alla stessa profondità del pcb in cui ci troviamo. il valore p_sib è un list_head quindi è un nodo.
 			- p_semAdd → l'indirizzo associato alla coda di semafori in cui il pcb si trova.
 			- p_prio → valore di priorità del processo corrente.(utile nelle code dei pcbs).
 		- semd_t → struttura dei semafori 
@@ -17,6 +17,7 @@
 			- Siamo abituati a vedere strutture con un campo \*next associato alla prossima struttura. In questo caso la situazione è diversa:
 				- I campi associati alle strutture sono essi stessi strutture con campi prev e next.
 				- Quasi nessuna funzione agisce sulle pcb direttamente: molto spesso ci tocca utilizzare la funzione container_of() per estrarre dal nostro struct list_head la struttura ad esso associata. Quindi quello che succede spesso è che iteriamo lungo un campo list_head e facciamo container_of per ottenere le informazioni associate al punto della lista in cui siamo arrivati.
+				- Dunque abbiamo il campo list_head che è il nostro nodo per spostarci o vivere nelle liste.
 		- ## Semafori
 			- Abbiamo due liste nel file Asl.c:
 				- semdFree_h → lista da inizializzare per avere la nostra pool di semafori disponibili
@@ -45,11 +46,12 @@
 		- ## PCBs
 			- abbiamo una sola lista da gestire: pcbFree_h → pool dei pcb a disposizione.
 			- i pcb hanno un valore di priorità da gestire. 
+			- I PCB hanno diversi campi che grazie alle linux_list indicano l'appartenenza a diverse liste/alberi/code a cui il pcb appartiene.
 			- #### Alberi
 				- abbiamo tre campi del pcb relativi a questa sezione:
-					- pcb * p_parent → puntatore al pcb del padre 
-					- list_head p_child → lista che inizia da valore sentinella e da inizio alla lista dei processi figli. Il valore sentinella è  il campo p_child dentro il pcb del padre.
-					- list_head p_sib → lista dei processi fratelli.
+					- pcb * p_parent → puntatore al pcb del padre. è un puntatore diretto. E' presente per tutti i pcb figli di un padre.
+					- list_head p_child → lista che inizia da valore sentinella e da inizio alla lista dei processi figli. E' contenuta nel pcb padre.
+					- list_head p_sib → lista dei processi fratelli. E' un nodo della lista dei p_child di un pcb padre.
 				- ASCII ART scarsa rappresentativa della relazione child e sib.:
 			- ```
 					-----PCB Genitore----- (sentinella)
