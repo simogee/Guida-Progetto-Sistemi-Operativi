@@ -50,3 +50,16 @@ Parola in pandos è 4 byte(32-bit)
 - metti una funzione db(); fino al punto in cui vuoi controllare.
 - poi fai break \[nomefile].c:\[numero riga]
 - poi c e vedi se runna fino a lì.
+
+
+
+## Comandi copia incolla su terminale
+- Prima per compilare:
+	- cmake --build build
+- Servono due terminali uno per gdb e uno per il gdb-server di uriscv
+- 1^ terminale:
+	-  uriscv-cli config_machine.json --gdb --debug
+- 2^ terminale:
+	- gdb-multiarch build/MultiPandOS
+		- target remote: 8080
+
