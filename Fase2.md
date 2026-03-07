@@ -73,21 +73,21 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 
 ### Scheduler
 - Bisogna considerare gli stati in cui lo scheduler deve comportarsi in modo diverso.
-	  - Stato di deployment base: ready_queue > 0
-		  - In questo caso dobbiamo:
-			  - current_process= processo da rimuovere dalla coda
+- Stato di deployment base: ready_queue > 0
+	- In questo caso dobbiamo:
+		 - current_process= processo da rimuovere dalla coda
 			  - SETTIMER(TIMESLICE) settiamo un intervallo di tempo perchè il processo sia eseguito: allo scadere scatta l'interrupt.
 			  - LDST(&current_process->p_s) carichiamo lo stato del processo nel processore.
-		- Caso  process_counter == 0 ovvero: non ci sono processi in ready_queue e non ci sono processi attivi e non ci sono processi bloccati. allora va in HALT
-		- Caso process_counter > 0 e soft_block > 0  allora si deve attendere WAIT(sulle slide c'è un blocco di codice)
-			- mie → machine interrupt-enable register che contiene bit che abilitano i singoli interrupt di livello machine.
-				- MTIE →  timer interrupt machine
-				- MSIE →  software interrupt machine
-				- MEIE → external interrupt machine 
-			- MIE_ALL & ~MIE_MTIE_MASK →  setta a neg il timer interrupt immagino perchè andando in wait evita di attivare l'interrupt del timer.
-			- status |= MSTATUS_MIE_MASK → accende i bit mie del status. “la CPU può accettare interrupt”
-				 - `|=` = accendi
-				 - `& ~MASK` = spegni
-		- Caso process_counter > 0 e soft_block == 0 → siamo nel caso di deadlock e viene invocato PANIC
+	- Caso  process_counter == 0 ovvero: non ci sono processi in ready_queue e non ci sono processi attivi e non ci sono processi bloccati. allora va in HALT
+	- Caso process_counter > 0 e soft_block > 0  allora si deve attendere WAIT(sulle slide c'è un blocco di codice)
+		- mie → machine interrupt-enable register che contiene bit che abilitano i singoli interrupt di livello machine.
+			-  MTIE →  timer interrupt machine
+			- MSIE →  software interrupt machine
+			- MEIE → external interrupt machine 
+		- MIE_ALL & ~MIE_MTIE_MASK →  setta a neg il timer interrupt immagino perchè andando in wait evita di attivare l'interrupt del timer.
+		- status |= MSTATUS_MIE_MASK → accende i bit mie del status. “la CPU può accettare interrupt”
+			 - `|=` = accendi
+			 - `& ~MASK` = spegni
+	- Caso process_counter > 0 e soft_block == 0 → siamo nel caso di deadlock e viene invocato PANIC
 ### Exception Handler
  - 
