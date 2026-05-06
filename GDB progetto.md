@@ -1,7 +1,7 @@
 # Legenda:
 - ELF : Executable and Linkable Format → formato finale che la CPU può caricare ed eseguire (direttamente o tramite il loader del sistema operativo)
 	- gcc -o main main.c → main diventa un elf file.
-	-  -g aggiunge debug informations al file 
+	-  -g aggiunge debug information al file 
 
 2 shell: 
 
@@ -63,3 +63,9 @@ Parola in pandos è 4 byte(32-bit)
 	- gdb-multiarch build/MultiPandOS
 		- target remote: 8080
 
+## Debugging da gui
+- Dopo aver compilato e fatto partire l'emulatore:
+  - F5 per far partire 
+  - mettere i breakpoint(ctrl+b) → bp(). Così si fermerà dove avete posizionato i bp nel codice.
+  - debug → add traced region → klog_buffer: così vi stamperà sul pannello memory i vostri klog.
+  
