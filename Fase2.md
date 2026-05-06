@@ -3,6 +3,7 @@
 - Questa fase è la prima fase in cui dobbiamo effettivamente controllare programmi che concorrono per l'uso delle risorse.
 - In pratica abbiamo costruito nella prima fase delle strutture dati che ora useremo per gestire le interazioni tra processi.
 - Potrà essere richiesto di modificare alcune cose della fase 1.(io almeno ho fatto così, non so se è possibile evitarlo).
+- Attenzione: scrivere memcpy copiato da gcc per permettere a compilatore di fare copia di campi. Potete farlo in init.c ed è necessario perchè non abbiamo accesso a librerie standard c al di fuori di quelle che ci vengono fornite.
 
 - Nucleo:
 	- Inizializzazione → chiama scheduler → fa partire processi → o terminano o vengono interrotti da interrupt o eccezioni per poi richiamare scheduler
@@ -80,6 +81,7 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 - N.B. più avanti nel progetto verrà scritto di tenere in considerazione il tempo dei vari processi. Riguardo questo aspetto abbiamo due diversi timer:
 	- PLT timer → timer del tempo di esecuzione del processo all'interno del processore
 	- Interval timer → timer generale che viene richiamato ogni tot e servirà suppongo nella prossima fase
+- cpu_t slice_start nelle slide mi pare non comparisse, va aggiunto per poter tenere traccia dei processi lanciati.(il valore poi verrà inizializzato in scheduler)
 
 ### Scheduler
 - Bisogna considerare gli stati in cui lo scheduler deve comportarsi in modo diverso.
@@ -115,7 +117,8 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 			- Questo è più tricky: bisogna terminare un processo e tutta la sua progenie. ma questo è un lavoro da fare ricorsivamente.
 			- No spoilers eccessivi ma probabilmente necessita una funzione extra(subtree_killer) che dovete creare voi. 
 			- I processi non si nascondono: si possono trovare: in ready_queue, semafori device e non device o il current process
-			- Se eliminate un processo diverso da quello corrente tenete in considerazione che potrebbe essere un genitore di quello corrente quindi tenete in considerazione anche quello.
+			- Se eliminate un processo diverso da quello corrente tenete in considerazione che potrebbe essere un genitore di quello corrente.
+			- Io per cercare i processi ho fatto una funzione in pcb.c(fase 1) che scorre la tabella di tutti i processi attivi e non e cerca il pid corretto. Inoltre ho fatto in modo che i processi non inizializzati abbiano un valore non raggiungibile in altro modo: quando i processi sono usati avranno valori positivi, quando non vengono usati o non sono mai stati usati avranno un valore negativo
 		- ### Passaren e Verhogen
 			- Servizi offerti dal kernel
 			- Potete farli senza pensare ai semafori mantenuti dal kernel tanto poi avrete modo di gestirli con altre syscall e interrupts(Spoiler)
@@ -138,6 +141,7 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 	- ### PassupOrDIE
 		- Qui bisogna salvare in determinate strutture dati i valori di supporto se presenti.
 		  in caso contrario verrà chiamata terminate process.
+		- TODO: context_t ecc...
 - ### Interrupt Handler
 	- #### PTL
 	- #### Interval Timer
@@ -145,8 +149,7 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 	- 
 
 ## TODO
-- memcpy copiato da gcc per permettere a compilatore di fare copia di campi
-- cpu_t slice_start; per permettere alla cpu di contare il tempo passato
-- findByPid; funzione per phase1 da creare per facilitare ricerca processi
+
+
 - casting ptr_exc->a0 in intero per leggere correttamente la variabile
 - STCK() per salvare il tempo in quell'istante
