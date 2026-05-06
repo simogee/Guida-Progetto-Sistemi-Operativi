@@ -4,6 +4,9 @@
 - In pratica abbiamo costruito nella prima fase delle strutture dati che ora useremo per gestire le interazioni tra processi.
 - Potrà essere richiesto di modificare alcune cose della fase 1.(io almeno ho fatto così, non so se è possibile evitarlo).
 - Attenzione: scrivere memcpy copiato da gcc per permettere a compilatore di fare copia di campi. Potete farlo in init.c ed è necessario perchè non abbiamo accesso a librerie standard c al di fuori di quelle che ci vengono fornite.
+- In C spesso abbiamo dentro i registri solo dei numeri, per poterli usare correttamente dobbiamo capire il casting corretto del valore per permettere al compilatore di interpretarli correttamente. Può anche succedere che abbiamo già castato i valori di un registro in una struttura ma in determinati casi potrebbe servirci una interpretazione diversa del valore rendendo obbligatorio un secondo cast.
+- - STCK(\[tempo]) per salvare il tempo in quell'istante. Legge il time of the day clock: un timer che cresce costantemente. e si usa per calcolare il tempo passato tra due istanti.
+- setTimer()-> serve invece per indicare al PLT quando generare un interrupt.
 
 - Nucleo:
 	- Inizializzazione → chiama scheduler → fa partire processi → o terminano o vengono interrotti da interrupt o eccezioni per poi richiamare scheduler
@@ -151,5 +154,3 @@ Init viene eseguito una sola volta, dopo il resto lo farà lo scheduler.x
 ## TODO
 
 
-- casting ptr_exc->a0 in intero per leggere correttamente la variabile
-- STCK() per salvare il tempo in quell'istante
